@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Il Mio Modello 3D in Realtà Aumentata (iOS Test con GLB)</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <style>
+        model-viewer {
+            width: 100vw;
+            height: 100vh;
+            --poster-color: #ffffff;
+            border: none;
+        }
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        /* Stile per il pulsante AR interno a model-viewer */
+        model-viewer::part(ar-button) {
+            left: unset;
+            right: 16px;
+            bottom: 32px;
+            visibility: visible !important;
+            opacity: 1 !important;
+            display: flex !important;
+            z-index: 10;
+        }
+
+        /* Nuovo stile per il pulsante AR nativo iOS separato - apparirà solo su iOS */
+        .ar-link-button {
+            position: fixed;
+            bottom: 100px; /* Posizionalo più in alto per non sovrapporsi */
+            right: 16px;
+            background-color: #007bff; /* Blu per differenziarlo */
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: sans-serif;
+            font-weight: bold;
+            z-index: 100;
+            display: none; /* Nascosto di default */
+        }
+
+        /* Mostra il pulsante .ar-link-button solo su iOS */
+        @supports (font: -apple-system-body) and (not (-webkit-overflow-scrolling: touch)) {
+            .ar-link-button {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <model-viewer
+        src="modello.glb"  alt="Il tuo modello 3D in realtà aumentata"
+        ar
+        ar-modes="webxr quick-look"
+        camera-controls
+        touch-action="pan-y"
+        shadow-intensity="1"
+        poster="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+        ar-button
+    ></model-viewer>
+
+    <a href="modello.glb" rel="ar" class="ar-link-button">
+        Vedi in AR (iOS nativo - GLB)
+    </a>
+
+</body>
+</html>
